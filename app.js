@@ -6,6 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
+var session = require('express-session');
+var passport = require('passport');
+var flash = require('connect-flash');
+var validator = require('express-validator');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -13,6 +17,7 @@ var users = require('./routes/users');
 var app = express();
 
 mongoose.connect('mongodb://admin:admin@ds141068.mlab.com:41068/demo2');
+require('./config/passport');
 
 // view engine setup
 app.engine('.hbs', exphbs({defaultLayout: 'layout', extname: '.hbs'}));
@@ -23,7 +28,16 @@ app.set('view engine', '.hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validator());
 app.use(cookieParser());
+app.use(session({
+  secret: 'mysupersecret',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
