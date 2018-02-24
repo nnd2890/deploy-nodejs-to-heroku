@@ -95,5 +95,5 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   req.session.oldUrl = req.url;
-  res.redirect('/user/signin');
+  res.redirect('/users/signin');
 }
