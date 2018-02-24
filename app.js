@@ -13,7 +13,8 @@ var validator = require('express-validator');
 var MongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
-var user = require('./routes/users');
+var users = require('./routes/users');
+var admins = require('./routes/admins');
 
 var app = express();
 
@@ -46,11 +47,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
   res.locals.login = req.isAuthenticated();
   res.locals.session = req.session;
+  console.lo
   next();
 });
 
 app.use('/', index);
-app.use('/user', user);
+app.use('/users', users);
+app.use('/admins', admins);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
