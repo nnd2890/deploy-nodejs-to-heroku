@@ -32,6 +32,7 @@ router.post('/signup', function(req, res, next) {
             if (err) {
                 console.log(err);
             }
+            req.flash('success', 'Successfully...');
             res.redirect('/');
         });
     }
