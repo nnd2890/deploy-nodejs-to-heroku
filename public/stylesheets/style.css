@@ -10,3 +10,7 @@
     font-weight: bold;
     font-size: 16px;
 }
+
+.productImage-table {
+    max-height: 50px;
+}
