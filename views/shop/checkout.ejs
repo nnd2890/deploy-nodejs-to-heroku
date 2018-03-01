@@ -1,9 +1,12 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+
 <div class="row">
     <div class="col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3">
         <h1>Check Out</h1>
-        <h4>Your Total: ${{total}}</h4>
-        <div id="charge-error" class="alert alert-danger {{#if noError}}hidden{{/if}}">
-            {{errMsg}}
+        <h4>Your Total: $<%= total %></h4>
+        <div id="charge-error" class="alert alert-danger <% if (noError) {%>hidden<% } %>">
+            <%= errMsg %>
         </div>
         <form action="/checkout" method="post" id="checkout-form">
             <div class="form-group">
@@ -14,8 +17,10 @@
                 <label for="address">Address</label>
                 <input type="address" class="form-control" id="address" name="address">
             </div>
-            {{!-- <input type="hidden" name="_csrf" value="{{csrfToken}}"> --}}
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button type="submit" class="btn btn-primary">Check Out</button>
         </form>
     </div>
 </div>
+
+<% include ../partials/footer %>

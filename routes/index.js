@@ -12,20 +12,78 @@ router.use(csrfProtection);
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var successMsg = req.flash('success')[0];
-  Product.find(function(err, docs) {
-    var productChunks = [];
-    var chunkSize = 3;
-    for (var i = 0; i < docs.length; i += chunkSize) {
-      productChunks.push(docs.slice(i, i + chunkSize));
-    }
-    res.render('shop/index', { title: 'Shopping Cart', products: productChunks, successMsg: successMsg, noMessages: !successMsg});
-  });
+  
+  // Set home page will appear
+  var productChunks = [];
+  var chunkSize = 3;
+  var perPage = 1*chunkSize;
+  var page = 1;
+
+  if (req.params.page > 1) {
+    var page = req.params.page
+  }
+
+  Product
+      .find({})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function(err, docs) {
+          Product.count().exec(function(err, count) {
+              for (var i = 0; i < docs.length; i += chunkSize) {
+                productChunks.push(docs.slice(i, i + chunkSize));
+              }
+              if (err) return next(err)
+              res.render('shop/index', {
+                  products: productChunks,
+                  current: page,
+                  pages: Math.ceil(count / perPage),
+                  title: 'Shopping Cart',
+                  successMsg: successMsg,
+                  noMessages: !successMsg
+              })
+          })
+      });
+});
+
+// paginated product router
+router.get('/products/:page', function(req, res, next) {
+  var successMsg = req.flash('success')[0];
+  // Set home page will appear
+  var productChunks = [];
+  var chunkSize = 3;
+  var perPage = 1*chunkSize;
+  var page = 1;
+
+  if (req.params.page > 1) {
+    var page = req.params.page
+  }
+
+  Product
+      .find({})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function(err, docs) {
+          Product.count().exec(function(err, count) {
+              for (var i = 0; i < docs.length; i += chunkSize) {
+                productChunks.push(docs.slice(i, i + chunkSize));
+              }
+              if (err) return next(err)
+              res.render('shop/index', {
+                  products: productChunks,
+                  current: page,
+                  pages: Math.ceil(count / perPage),
+                  title: 'Shopping Cart',
+                  successMsg: successMsg,
+                  noMessages: !successMsg
+              })
+          })
+      });
 });
 
 // Handle add product
 router.get('/add-product', function(req, res, next) {
   var messages = req.flash('messages');
-  res.render('shop/add-product', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
+  res.render('shop/add-product', {title: 'Add Product', csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
 });
 
 router.post('/add-product', function(req, res, next) {
@@ -78,7 +136,7 @@ router.get('/edit-product/:id', function(req, res, next) {
       console.log(err);
     }
     var messages = req.flash('messages');
-    res.render('shop/edit-product', {csrfToken: req.csrfToken(), product: product, messages: messages, hasErrors: messages.length > 0});
+    res.render('shop/edit-product', {title: 'Edit Product', csrfToken: req.csrfToken(), product: product, messages: messages, hasErrors: messages.length > 0});
   });
 });
 
@@ -94,7 +152,8 @@ router.post('/edit-product/:id', function(req, res, next) {
       errors.forEach(function(error) {
           messages.push(error.msg);
       });
-      res.render('shop/edit-product', {messages: messages, hasErrors: messages.length > 0});
+      req.flash('messages', messages);
+      res.redirect('shop/edit-product');
   } else {
     var title = req.body.title;
     var imagepath = req.body.imagepath;
@@ -144,7 +203,6 @@ router.get('/add-to-cart/:id', function(req, res, next) {
     
     cart.add(product, productId);
     req.session.cart = cart;
-    console.log(req.session.cart);
     res.redirect('/');
   });
 });
@@ -169,10 +227,10 @@ router.get('/remove/:id', function(req, res, next) {
 
 router.get('/shopping-cart', function(req, res, next) {
   if (!req.session.cart) {
-    return res.render('shop/shopping-cart', {product: null});
+    return res.render('shop/shopping-cart', {title: 'Cart', products: null});
   }
   var cart = new Cart(req.session.cart);
-  res.render('shop/shopping-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+  res.render('shop/shopping-cart', {title: 'Cart', products: cart.generateArray(), totalPrice: cart.totalPrice});
 });
 
 router.get('/checkout', isLoggedIn, function(req, res, next) {
@@ -181,7 +239,7 @@ router.get('/checkout', isLoggedIn, function(req, res, next) {
   }
   var cart = new Cart(req.session.cart);
   var errMsg = req.flash('error')[0];
-  res.render('shop/checkout', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
+  res.render('shop/checkout', {title: 'Check Out', csrfToken: req.csrfToken(), total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
 });
 
 router.post('/checkout', isLoggedIn, function(req, res, next) {

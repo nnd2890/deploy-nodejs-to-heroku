@@ -1,0 +1,79 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+
+<div class="row">
+    <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+      <div id="success" class="alert alert-success <% if (noMessages) { %> hidden <% } %> ">
+        <%= successMsg %>
+      </div>
+    </div>
+</div>
+
+{{!-- Content --}}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="row">
+      <a class="btn btn-success pull-right" href="/add-product">Add Product</a>
+    </div>
+    <hr>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Image</th>
+          <th scope="col">Price</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i = 0; i < products.length; i++) { %>
+          <% for(var j = 0; j < products[i].length; j++) { %>
+            <tr>
+              <td class="col-md-5"><%= products[i][j].title %></td>
+              <td class="col-md-2"><img class="img-responsive productImage-table" src="<%= products[i][j].imagePath %>" alt="..."></td>
+              <td class="col-md-2">$<%= products[i][j].price %></td>
+              <td class="col-md-3">
+                <div class="btn-group" role="group" aria-label="...">
+                  <a href="/edit-product/{{this._id}}" class="btn btn-primary">Edit</a>
+                  <a class="btn btn-danger deleteProduct" data-id="<%= products[i][j]._id %>">Delete</a>
+                </div>
+              </td>
+            </tr>
+          <% } %>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <% if (pages > 0) { %>
+    <ul class="pagination text-center">
+        <% if (current == 1) { %>
+            <li class="disabled"><a>First</a></li>
+        <% } else { %>
+            <li><a href="admins/products/1">First</a></li>
+        <% } %>
+        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+        <% if (i !== 1) { %>
+            <li class="disabled"><a>...</a></li>
+        <% } %>
+        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+            <% if (i == current) { %>
+                <li class="active"><a><%= i %></a></li>
+            <% } else { %>
+                <li><a href="admins/products/<%= i %>"><%= i %></a></li>
+            <% } %>
+            <% if (i == Number(current) + 4 && i < pages) { %>
+                <li class="disabled"><a>...</a></li>
+            <% } %>
+        <% } %>
+        <% if (current == pages) { %>
+            <li class="disabled"><a>Last</a></li>
+        <% } else { %>
+            <li><a href="admins/products/<%= pages %>">Last</a></li>
+        <% } %>
+    </ul>
+  <% } %>
+</div>
+
+<% include ../partials/footer %>

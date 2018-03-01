@@ -4,7 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 var exphbs = require('express-handlebars');
+var paginateHelper = require('express-handlebars-paginate');
+
 var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
@@ -22,8 +25,10 @@ mongoose.connect('mongodb://admin:admin@ds141068.mlab.com:41068/demo2');
 require('./config/passport');
 
 // view engine setup
-app.engine('.hbs', exphbs({defaultLayout: 'layout', extname: '.hbs'}));
-app.set('view engine', '.hbs');
+  // app.engine('.hbs', exphbs({defaultLayout: 'layout', extname: '.hbs'}));
+  // app.set('view engine', '.hbs');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

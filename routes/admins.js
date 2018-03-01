@@ -11,7 +11,7 @@ router.use(csrfProtection);
 
 router.get('/signup', function(req, res, next) {
     var messages = req.flash('messages');
-    res.render('admin/signup', {csrfToken: req.csrfToken(),  messages: messages, hasErrors: messages.length > 0});
+    res.render('admin/signup', {title: 'Shopping Cart', csrfToken: req.csrfToken(),  messages: messages, hasErrors: messages.length > 0});
 });
 
 router.post('/signup', function(req, res, next) {
@@ -23,7 +23,9 @@ router.post('/signup', function(req, res, next) {
         errors.forEach(function(error) {
             messages.push(error.msg)
         });
-        res.render('admin/signup', {messages: messages, hasErrors: messages.length > 0});
+
+        req.flash('messages', messages);
+        res.redirect('/admins/signup');
     } else {
         var email = req.body.email;
         var password = req.body.password;
@@ -50,40 +52,72 @@ router.post('/signup', function(req, res, next) {
     }
 });
 
-router.get('/products/:page', function(req, res, next) {
-    var perPage = 3;
-    var page = req.params.page || 1;
+router.get('/products', function(req, res, next) {
+    var successMsg = req.flash('success')[0];
+    // Set home page will appear
+    var productChunks = [];
+    var chunkSize = 3;
+    var perPage = 1*chunkSize;
+    var page = 1;
+
+    if (req.params.page > 1) {
+        var page = req.params.page
+    }
 
     Product
-        .find({})
-        .skip((perPage * page) - perPage)
-        .limit(perPage)
-        .exec(function(err, products) {
-            Product.count().exec(function(err, count) {
-                if (err) return next(err);
-                 // set number of item will appearencing in one row
-                var productChunks = [];
-                var chunkSize = 3;
-                for (var i = 0; i < products.length; i += chunkSize) {
-                    productChunks.push(products.slice(i, i + chunkSize));
-                }
+      .find({})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function(err, docs) {
+          Product.count().exec(function(err, count) {
+              for (var i = 0; i < docs.length; i += chunkSize) {
+                productChunks.push(docs.slice(i, i + chunkSize));
+              }
+              if (err) return next(err)
+              res.render('shop/index', {
+                  products: productChunks,
+                  current: page,
+                  pages: Math.ceil(count / perPage),
+                  title: 'Shopping Cart',
+                  successMsg: successMsg,
+                  noMessages: !successMsg
+              })
+          })
+      });
+});
 
-                res.render('admin/product', {
-                    products: productChunks,
-                    curent: page,
-                    pages: Math.ceil(count / perPage)
-                });
-            });
-        });
-    // var successMsg = req.flash('success')[0];
-    // Product.find(function(err, docs) {
-    //     var productChunks = [];
-    //     var chunkSize = 3;
-    //     for (var i = 0; i < docs.length; i += chunkSize) {
-    //         productChunks.push(docs.slice(i, i + chunkSize));
-    //     }
-    //     res.render('admin/product', {products: productChunks, successMsg: successMsg, noMessages: !successMsg});
-    // });
+router.get('/products/:page', function(req, res, next) {
+    var successMsg = req.flash('success')[0];
+    // Set home page will appear
+    var productChunks = [];
+    var chunkSize = 3;
+    var perPage = 1*chunkSize;
+    var page = 1;
+
+    if (req.params.page > 1) {
+        var page = req.params.page
+    }
+
+    Product
+      .find({})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function(err, docs) {
+          Product.count().exec(function(err, count) {
+              for (var i = 0; i < docs.length; i += chunkSize) {
+                productChunks.push(docs.slice(i, i + chunkSize));
+              }
+              if (err) return next(err)
+              res.render('shop/index', {
+                  products: productChunks,
+                  current: page,
+                  pages: Math.ceil(count / perPage),
+                  title: 'Shopping Cart',
+                  successMsg: successMsg,
+                  noMessages: !successMsg
+              })
+          })
+      });
 });
 
 module.exports = router;
