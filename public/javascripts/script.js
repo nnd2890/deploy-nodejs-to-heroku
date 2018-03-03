@@ -1,20 +1,25 @@
-$(document).ready(function(){
-    $('.deleteProduct').on('click', function(e){
+$(document).ready(function() {
+  $( ".delete-article" ).on( "click", function(e) {
+    if(confirm("Are you sure you want to delete this?")){
       $target = $(e.target);
-      var id = $target.attr('data-id');
+      const id = $target.attr('data-id');
+      const csrfToken = $( "#_csrf" ).val();
       $.ajax({
-        type:'DELETE',
-        url:'http://localhost:3000/products/'+id,
-        xhrFields: {
-            withCredentials: true
-       },
+        type: 'DELETE',
+        url: '/article/'+id,
+        headers: {
+          'CSRF-Token': csrfToken 
+        },
         success: function(response) {
-            alert('Deleting product...');
-            window.location.href = '/';
+          location.reload();
         },
         error: function(err) {
-            console.log(err);
+          console.log(err);
         }
       });
-    });
+    }
+    else{
+        return false;
+    }
+  });
 });

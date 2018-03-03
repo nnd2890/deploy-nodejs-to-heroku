@@ -37,7 +37,7 @@
               <% if (current == 1) { %>
                   <li class="disabled"><a>First</a></li>
               <% } else { %>
-                  <li><a href="/products/1">First</a></li>
+                  <li><a href="/product-category/<%= categoryName %>/1">First</a></li>
               <% } %>
               <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
               <% if (i !== 1) { %>
@@ -47,7 +47,7 @@
                   <% if (i == current) { %>
                       <li class="active"><a><%= i %></a></li>
                   <% } else { %>
-                      <li><a href="/products/<%= i %>"><%= i %></a></li>
+                      <li><a href="/product-category/<%= categoryName %>/<%= i %>"><%= i %></a></li>
                   <% } %>
                   <% if (i == Number(current) + 4 && i < pages) { %>
                       <li class="disabled"><a>...</a></li>
@@ -56,7 +56,7 @@
               <% if (current == pages) { %>
                   <li class="disabled"><a>Last</a></li>
               <% } else { %>
-                  <li><a href="/products/<%= pages %>">Last</a></li>
+                  <li><a href="/product-category/<%= categoryName %>/<%= pages %>">Last</a></li>
               <% } %>
           </ul>
         <% } %>

@@ -179,19 +179,18 @@ router.post('/edit-product/:id', function(req, res, next) {
   }
 });
 
-router.delete('/products/:id', function(req, res, next) {
-  console.log(req.params.id);
+router.delete('/article/:id', function(req, res, next) {
+    console.log("route delete");
+    let query = {_id: req.params.id};
+    Product.remove(query, function(err) {
+        if(err) {
+            console.log(err);
+        }
+        res.send('Success');
+    });
 });
-// router.delete('/products/delete/:id', function(req, res, next){
-//   console.log(req.params.id);
-//   // var productId = req.params.id;
-//   // Product.remove({ _id: productId }, function (err) {
-//   //   if (err) return handleError(err);
-    
-//   //   // removed!
-//   // });
-// });
 
+// Handle add to cart
 router.get('/add-to-cart/:id', function(req, res, next) {
   var productId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {items: {}});
@@ -258,6 +257,42 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
     req.session.cart = null;
     res.redirect('/');
   });
+});
+
+// Page Category Route
+router.get('/product-category/:category/:page', function(req, res, next) {
+  
+  var category = req.params.category;
+  var page = req.params.page || 1;
+
+  // Set Sesion category and page
+  req.session.categoryName = category;
+
+  var successMsg = req.flash('success')[0];
+  var productChunks = [];
+  var chunkSize = 3;
+  var perPage = 1*chunkSize;
+
+  Product.find({ 'category': category })
+          .skip((perPage * page) - perPage)
+          .limit(perPage)
+          .exec(function(err, docs) {
+              Product.count({ 'category': category }).exec(function(err, count) {
+                  for (var i = 0; i < docs.length; i += chunkSize) {
+                    productChunks.push(docs.slice(i, i + chunkSize));
+                  }
+                  if (err) return next(err)
+                  res.render('shop/category', {
+                      products: productChunks,
+                      current: page,
+                      pages: Math.ceil(count / perPage),
+                      title: 'Shopping Cart',
+                      successMsg: successMsg,
+                      noMessages: !successMsg,
+                      categoryName: req.session.categoryName
+                  });
+              });
+          });
 });
 
 module.exports = router;
