@@ -6,8 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var exphbs = require('express-handlebars');
-var paginateHelper = require('express-handlebars-paginate');
-
 var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
@@ -51,8 +49,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   res.locals.login = req.isAuthenticated();
-  res.locals.session = req.session;
-  console.lo
+  res.locals.session = req.session || null;
+  res.locals.cart = req.session.cart || null;
   next();
 });
 
