@@ -51,6 +51,7 @@ app.use(function(req, res, next) {
   res.locals.login = req.isAuthenticated();
   res.locals.session = req.session || null;
   res.locals.cart = req.session.cart || null;
+  res.locals.user = req.user || null;
   next();
 });
 

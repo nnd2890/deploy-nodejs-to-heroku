@@ -1,12 +1,12 @@
 $(document).ready(function() {
-  $( ".delete-article" ).on( "click", function(e) {
+  $( ".delete-product" ).on( "click", function(e) {
     if(confirm("Are you sure you want to delete this?")){
       $target = $(e.target);
       const id = $target.attr('data-id');
       const csrfToken = $( "#_csrf" ).val();
       $.ajax({
         type: 'DELETE',
-        url: '/article/'+id,
+        url: '/delete-product/'+id,
         headers: {
           'CSRF-Token': csrfToken 
         },

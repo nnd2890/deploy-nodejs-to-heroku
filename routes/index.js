@@ -81,14 +81,16 @@ router.get('/products/:page', function(req, res, next) {
 });
 
 // Handle add product
-router.get('/add-product', function(req, res, next) {
+router.get('/add-product', isAdmin, function(req, res, next) {
   var messages = req.flash('messages');
   res.render('shop/add-product', {title: 'Add Product', csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
 });
 
-router.post('/add-product', function(req, res, next) {
+router.post('/add-product', isAdmin, function(req, res, next) {
+  console.log(req.body);
   req.checkBody('title', 'Invalid title').notEmpty();
   req.checkBody('imagepath', 'Invalid imagepath').notEmpty();
+  req.checkBody('category', 'Invalid category').notEmpty();
   req.checkBody('price', 'Invalid price').notEmpty();
   req.checkBody('description', 'Invalid description').notEmpty();
   var errors = req.validationErrors();
@@ -97,10 +99,12 @@ router.post('/add-product', function(req, res, next) {
       errors.forEach(function(error) {
           messages.push(error.msg);
       });
-      res.render('shop/add-product', {messages: messages, hasErrors: messages.length > 0});
+      req.flash('messages', messages);
+      res.redirect('/add-product');
   } else {
     var title = req.body.title;
     var imagepath = req.body.imagepath;
+    var category = req.body.category;
     var price = req.body.price;
     var description = req.body.description;
     Product.findOne({'title': title}, function(err, product) {
@@ -112,8 +116,9 @@ router.post('/add-product', function(req, res, next) {
         res.redirect('/add-product');
       } else {
         var newProduct = new Product();
-        newProduct.title = title; 
+        newProduct.title = title;
         newProduct.imagePath = imagepath;
+        newProduct.category = category;
         newProduct.price = price;
         newProduct.description = description;
         newProduct.save(function(err, result) {
@@ -121,7 +126,7 @@ router.post('/add-product', function(req, res, next) {
               console.log(err);
           }
           req.flash('success', 'Product saved...');
-          res.redirect('/');
+          res.redirect('/admins/products');
         }); 
       }
     });
@@ -179,7 +184,7 @@ router.post('/edit-product/:id', function(req, res, next) {
   }
 });
 
-router.delete('/article/:id', function(req, res, next) {
+router.delete('/delete-product/:id', function(req, res, next) {
     console.log("route delete");
     let query = {_id: req.params.id};
     Product.remove(query, function(err) {
@@ -302,5 +307,13 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   req.session.oldUrl = req.url;
+  res.redirect('/users/signin');
+}
+
+function isAdmin(req, res, next) {
+  if (req.isAuthenticated() && req.user.isAdmin === true) {
+    return next();
+  }
+  req.flash('error', 'Please sign in with admin account');
   res.redirect('/users/signin');
 }

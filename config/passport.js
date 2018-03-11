@@ -11,7 +11,7 @@ passport.deserializeUser(function(id, done) {
         done(err, user);
     });
 });
-
+ //  Handle user
 passport.use('local.signup', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',

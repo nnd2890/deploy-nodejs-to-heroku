@@ -21,6 +21,7 @@
           <tr>
             <th scope="col">Title</th>
             <th scope="col">Image</th>
+            <th scope="col">category</th>
             <th scope="col">Price</th>
             <th scope="col">Action</th>
           </tr>
@@ -31,12 +32,13 @@
               <tr>
                 <td class="col-md-5"><%= products[i][j].title %></td>
                 <td class="col-md-2"><img class="img-responsive productImage-table" src="<%= products[i][j].imagePath %>" alt="..."></td>
+                <td class="col-md-2"><%= products[i][j].category %></td>
                 <td class="col-md-2">$<%= products[i][j].price %></td>
                 <td class="col-md-3">
                   <div class="btn-group" role="group" aria-label="...">
                     <a href="/edit-product/<%= products[i][j]._id %>" class="btn btn-primary">Edit</a>
                     <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>">
-                    <a href="#" class="btn btn-danger delete-article" data-id="<%= products[i][j]._id %>" role="button">Delete</a>
+                    <a href="#" class="btn btn-danger delete-product" data-id="<%= products[i][j]._id %>" role="button">Delete</a>
                   </div>
                 </td>
               </tr>
@@ -54,7 +56,7 @@
           <% if (current == 1) { %>
               <li class="disabled"><a>First</a></li>
           <% } else { %>
-              <li><a href="/admins/1">First</a></li>
+              <li><a href="/admins/products/1">First</a></li>
           <% } %>
           <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
           <% if (i !== 1) { %>
@@ -64,7 +66,7 @@
               <% if (i == current) { %>
                   <li class="active"><a><%= i %></a></li>
               <% } else { %>
-                  <li><a href="/admins/<%= i %>"><%= i %></a></li>
+                  <li><a href="/admins/products/<%= i %>"><%= i %></a></li>
               <% } %>
               <% if (i == Number(current) + 4 && i < pages) { %>
                   <li class="disabled"><a>...</a></li>
@@ -73,7 +75,7 @@
           <% if (current == pages) { %>
               <li class="disabled"><a>Last</a></li>
           <% } else { %>
-              <li><a href="/admins/<%= pages %>">Last</a></li>
+              <li><a href="/admins/products/<%= pages %>">Last</a></li>
           <% } %>
       </ul>
     <% } %>
