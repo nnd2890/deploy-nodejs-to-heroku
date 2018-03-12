@@ -60,12 +60,16 @@ router.post('/signin', passport.authenticate('local.signin', {
   failureRedirect: '/users/signin',
   failureFlash: true
 }), function(req, res, next) {
-  if (req.session.oldUrl) {
-    var oldUrl = req.session.oldUrl;
-    req.session.oldUrl = null;
-    res.redirect(oldUrl);
+  if (req.user.isAdmin === true) {
+    res.redirect('/admins/products');
   } else {
-    res.redirect('/users/profile');
+    if (req.session.oldUrl) {
+      var oldUrl = req.session.oldUrl;
+      req.session.oldUrl = null;
+      res.redirect(oldUrl);
+    } else {
+      res.redirect('/users/profile');
+    }
   }
 });
 

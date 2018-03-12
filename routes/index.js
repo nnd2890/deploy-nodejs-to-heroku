@@ -177,7 +177,7 @@ router.post('/edit-product/:id', function(req, res, next) {
               console.log(err);
           }
           req.flash('success', 'Product updated...');
-          res.redirect('/');
+          res.redirect('/admins/products');
         }); 
       }
     });
