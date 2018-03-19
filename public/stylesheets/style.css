@@ -1,22 +1,457 @@
-.thumbnail img {
-    max-height: 150px;
+/*======================================================================================*/
+/*Global*/
+/*======================================================================================*/
+* {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+}
+html {
+    font-family: "Lucida Sans", sans-serif;
 }
 
-.thumbnail .description {
-    color: #7f7f7f;
+body{
+	 background-color: #374046;
+	 margin: 0;
+	 padding: 0;
 }
 
-.price {
-    font-weight: bold;
-    font-size: 16px;
+header, main, footer{
+	position: relative;
 }
 
-.productImage-table {
-    max-height: 50px;
+
+ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
 
-/*!
- * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
- * Copyright 2013-2017 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
- */
+/*Set text center for block*/
+.text-center {
+	text-align: center;
+}
+
+.disabled {
+	background-color: darkGray;
+	pointer-events:none;
+}
+
+/*========Pagination*/
+.pagination {
+	display: inline-block;
+	float: right;
+}
+
+.pagination a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
+	margin: 0 4px;
+}
+
+.pagination a.active {
+	background-color: #4caf50;
+	color: white;
+	border: 1px solid #4caf50;
+}
+
+.pagination a:hover:not(.active) {
+	background-color: #ddd;
+}
+
+
+/*======================================================================================*/
+/*Header*/
+/*======================================================================================*/
+header{
+	background: #374046;
+	font-size: 18px;
+	padding: 0 0 80px 0;
+	margin: 0;
+	min-height: 70px;
+	border-bottom: #e8491d solid;
+}
+
+header #branding{
+	color: #ffffff;
+	float: left;
+}
+
+header #branding h1{
+	padding: 0;
+	float: left;
+	font-size: 50px;
+	margin: 0 0 40px 0;
+}
+
+header #branding .header-infor{
+	float: left;
+	margin: 0;
+}
+header .highlight, header .current a{
+	color: #7a8186;
+	font-weight: bold;
+}
+
+header i{
+	font-size: 34px;
+}
+
+
+/*Dropdown Account=====================*/
+.dropdown {
+	position: relative;
+	display: inline-block;
+	float: right;
+	margin: 35px 30px 0 0;
+	/*z-index: 1;*/
+}
+
+.dropbtn {
+	color: white;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+	position: relative;
+	z-index: 1;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+	color: #2980b9;
+}
+
+.dropdown-content {
+	color: #a0aab1;
+	background-color: #ffffff;
+	min-width: 300px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	display: none;
+	position: absolute;
+	right: 0;
+	z-index: 2;
+}
+
+.dropdown-content a {
+	color: #a0aab1;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: #ddd;
+}
+
+.dropdown-content a i {
+	font-size: 16px;
+	margin: 5px;
+}
+
+.dropdown-content p {
+	border-top: 1px solid #a0aab1;
+	border-bottom: 1px solid #a0aab1;
+	text-align: center;
+	padding: 15px 0;
+	color: #a0aab1;
+}
+
+.show {
+	display: block;
+}
+
+/*======================================================================================*/
+/* Main */
+/*======================================================================================*/
+main{
+	background-color: #fff;
+	color: #fefefe;
+}
+
+.menu{
+	display: none;
+	padding-top: 0;
+	margin-top: 0;
+	position: absolute;
+	top: -40px;
+	z-index: 1;
+}
+
+.menu .category-menu{
+	background-color: #fefefe;
+	box-shadow: 0 0 10px #dfdfdf;
+}
+
+.menu .category-menu h1{
+	height: 68px;
+	font-size: 2.5vw;
+	background-color: #009587;
+	text-align: center;
+	padding: 10px;
+	margin: 0;
+}
+
+.menu .category-menu ul{
+	padding: 0 0 0 10%;
+}
+
+.menu .category-menu li a{
+	display: block;
+	padding: 5% 0;
+	color: #a4aeb4;
+    text-decoration: none;
+}
+
+.menu .category-menu li a:hover{
+	color: #363f45;
+}
+
+.content{
+	float: right;
+}
+
+.content .search, .shopping-cart{
+	height: 68px;
+	background-color: #ffffff;
+	color: #9ca7ad;
+	text-align: center;
+	margin-bottom: 20px;
+	box-shadow: 5px 5px 5px #dfdfdf;
+	position: absolute;
+	top: -40px;
+ 	z-index: 1;
+}
+
+.content .search{
+	margin-left: 15px;
+	padding: 1% 0.7%;
+}
+
+.content .search input{
+	padding: 10px 0;
+	width: 75%;
+	height: 100%;
+	margin: 0;
+	float: left;
+	font-size: 120%;
+	color: #9ca7ad;
+	border: 1px solid #9ca7ad;
+}
+
+.content .search input[placeholder]{
+	padding-left: 10px;
+}
+
+.content .search button{
+	padding: 9px 0;
+	width: 25%;
+	height: 100%;
+	margin: 0;
+	float: left;
+	background-color: #fe5621;
+	border: 0;
+}
+
+.content .search button i{
+	font-size: 200%;
+	color: #ffffff;
+}
+
+.content .shopping-cart{
+	right: 45px;
+	font-size: 110%;
+}
+
+.content .shopping-cart i, span{
+	padding: 10px 0 0 0;
+}
+
+.content .slideshow-container{
+	padding: 0 15px;
+	max-width: 100%;
+	position: relative;
+	margin: auto;
+	margin-top: 20px;
+	height: 400px;
+	clear: both;
+	z-index: 1;
+}
+
+/*Hide the image by default*/
+.content .slideshow-container .mySlides{
+	height: 400px;
+	background-size: cover;
+}
+
+.content .slideshow-container .prev:hover, .next:hover{
+	background-color: rgba(0,0,0,0.8);
+}
+
+.content .slideshow-container .text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+.content .slideshow-container .dots{
+	position: absolute;
+	right: 2%;
+	bottom: 5px;
+}
+
+.content .slideshow-container .dot{
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: #dadee1;
+	border-radius: 50%;
+	display: inline-block;
+	-webkit-transition: background-color 0.6s ease;
+	-o-transition: background-color 0.6s ease;
+	transition: background-color 0.6s ease;
+}
+
+.content .slideshow-container .active, .dot:hover{
+	background-color: #717171;
+}
+ 
+/* Set fade for slide show */
+.content .slideshow-container .fade{
+    -webkit-animation-name: fade;
+            animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+            animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade{
+	from{opacity: .4}
+	to{opacity: 1}
+}
+
+@keyframes fade{
+	from{opacity: .4}
+	to{opacity: 1}
+}
+
+/*=========================*/
+/*List content*/
+.list-content {
+	position: relative;
+	z-index: 2;
+}
+
+/*Create Card*/
+div.card {
+	margin: 0;
+	padding: 15px;
+}
+
+div.card .img-card {
+	height: 200px;
+	background-color: #f3f5f6;
+	padding: 10px 5px;
+	text-align: center;
+
+}
+
+div.card .img-card img {
+	width: 70%;
+    height: auto;
+    max-height: 180px;
+}
+
+div.card h3 {
+	color: #0f9b8e;
+	text-align: center;
+	font-size: 18px;
+}
+
+div.card h4 {
+	color: #3d464b;
+	text-align: center;
+	font-size: 16px;
+}
+
+
+/*======================================================================================*/
+/* Footer */
+/*======================================================================================*/
+/*section footer*/
+footer .information, .why-buy-from-us, .my-account {
+	padding: 20px 50px;
+}
+
+footer h1 {
+	color: #d7d9da;
+}
+
+footer li a{
+	display: block;
+	padding:5px 0;
+	color: #a4aeb4;
+    text-decoration: none;
+}
+
+footer li a:hover{
+	color: #363f45;
+}
+/*======================================================================================*/
+/* Reponsive page */
+/*======================================================================================*/
+/* For mobile phones: */
+[class*="col-"] {
+    width: 100%;
+}
+@media only screen and (min-width: 600px) {
+    /* For tablets: */
+    .col-s-1 {width: 8.33%;}
+    .col-s-2 {width: 16.66%;}
+    .col-s-3 {width: 25%;}
+    .col-s-4 {width: 33.33%;}
+    .col-s-5 {width: 41.66%;}
+    .col-s-6 {width: 50%;}
+    .col-s-7 {width: 58.33%;}
+    .col-s-8 {width: 66.66%;}
+    .col-s-9 {width: 75%;}
+    .col-s-10 {width: 83.33%;}
+    .col-s-11 {width: 91.66%;}
+    .col-s-12 {width: 100%;}
+
+    /*Reduce size h1 category*/
+    .menu {
+		display: block;
+	}
+}
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+}
+
+

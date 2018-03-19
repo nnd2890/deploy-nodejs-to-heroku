@@ -1,67 +1,206 @@
-<% include ../partials/header %>
-  <% include ../partials/navbar %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Acme Web Design | Wellcome</title>
 
-  <div class="container">
-    <% include ../partials/sidebar %>
-    <div class="col-lg-9">
-      <div class="row">
-        <div id="success" class="alert alert-success <% if (noMessages) { %> hidden <% } %> ">
-          <%= successMsg %>
-        </div>
-      </div>
+	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+</head>
+<body>
+	<header class="col-12 col-s-12">
+		<div class="col-9 col-s-9" id="branding">
+			<h1 class="col-6 col-s-6">Books<span class="highlight">Store</span></h1>
+			<div class="col-6 col-s-6 header-infor">
+				<i class="fas fa-phone"></i> <span>800-2345-6789; 800-2345-6788</span>
+			</div>
+		</div>
 
-      <% for (var i = 0; i < products.length; i++) { %>
-        <div class="row">
-            <% for(var j = 0; j < products[i].length; j++) { %>
-                <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
-                      <img src="<%= products[i][j].imagePath %>" alt="...">
-                      <div class="caption">
-                        <h3><%= products[i][j].title %></h3>
-                        <p class="description"><%= products[i][j].description %></p>
-                        <div class="clearfix">
-                            <div class="pull-left price">$<%= products[i][j].price %></div>
-                            <a href="/add-to-cart/<%= products[i][j]._id %>" class="btn btn-success pull-right" role="button">Add To Shopping Cart</a>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-            <% } %>
-        </div>
-      <% } %>
+		<div class="dropdown">
+		  <span class="dropbtn"><i onclick="myFunction()" class="drop-click fas fa-bars"></i></span>
+		  <div id="myDropdown" class="dropdown-content">
+		    <a href="#"><i class="fas fa-user"></i> My Account</a>
+		    <a href="#"><i class="fas fa-sign-in-alt"></i> Sing In</a>
+		    <a href="#"><i class="fas fa-user-plus"></i> Sign Up</a>
+		    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		    <p>Welcome to our online store!</p>
+		  </div>
+		</div>
 
-      <!-- Pagination -->
-      <div class="row text-center">
-        <% if (pages > 0) { %>
-          <ul class="pagination text-center">
-              <% if (current == 1) { %>
-                  <li class="disabled"><a>First</a></li>
-              <% } else { %>
-                  <li><a href="/products/1">First</a></li>
-              <% } %>
-              <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-              <% if (i !== 1) { %>
-                  <li class="disabled"><a>...</a></li>
-              <% } %>
-              <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
-                  <% if (i == current) { %>
-                      <li class="active"><a><%= i %></a></li>
-                  <% } else { %>
-                      <li><a href="/products/<%= i %>"><%= i %></a></li>
-                  <% } %>
-                  <% if (i == Number(current) + 4 && i < pages) { %>
-                      <li class="disabled"><a>...</a></li>
-                  <% } %>
-              <% } %>
-              <% if (current == pages) { %>
-                  <li class="disabled"><a>Last</a></li>
-              <% } else { %>
-                  <li><a href="/products/<%= pages %>">Last</a></li>
-              <% } %>
-          </ul>
-        <% } %>
-      </div>
-    </div>
-  </div>
-  
-<% include ../partials/footer %>
+	</header>
+
+	<main class="col-12 col-s-12">
+		<div class="col-3 col-s-3 menu">
+			<div class="category-menu">
+				<h1>Categories</h1>
+				<ul>
+			    	<li><a href="#">Magazines</a></li>
+				 	<li><a href="#">Comics</a></li>
+				  	<li><a href="#">Books</a></li>
+				  	<li><a href="#">CD/DVD</a></li>
+				  	<li><a href="#">Cards</a></li>
+				  	<li><a href="#">Calendars</a></li>
+				  	<li><a href="#">Blanks</a></li>
+				  	<li><a href="#">Rarity</a></li>
+				  	<li><a href="#">Antiques</a></li>
+				  	<li><a href="#">Writing Materials</a></li>
+			  	</ul>
+			</div>
+			<div class="special-menu">Special Menu</div>
+		</div>
+		<div class="col-9 col-s-9 content">
+			<div class="col-6 col-s-6 search">
+				<form action="/" method="get">
+					<input type="text" name="search" placeholder="Search">
+					<button type="submit"><i class="fas fa-search"></i></button>
+				</form>
+			</div>
+			<div class="col-2 col-s-2 shopping-cart">
+				<i class="fas fa-shopping-cart"></i> 1 <span>item(s)</span>
+			</div>
+
+			<div class="slideshow-container">
+				<div class="mySlides fade">
+				</div>
+				<div class="mySlides fade">
+				</div>
+				<div class="mySlides fade">
+				</div>
+				<div class="dots" style="text-align:center">
+					<span class="dot" onclick="currentSlide(1)"></span>
+					<span class="dot" onclick="currentSlide(2)"></span>
+					<span class="dot" onclick="currentSlide(3)"></span>
+				</div>
+			</div>
+
+			<div class="list-content">
+				
+				<div class="row">
+			        <div id="success" class="alert alert-success <% if (noMessages) { %> hidden <% } %> ">
+			          <%= successMsg %>
+			        </div>
+		      	</div>
+		      	<% for (var i = 0; i < products.length; i++) { %>
+			      	<div class="row">
+						<% for(var j = 0; j < products[i].length; j++) { %>
+			                <div class="col-4 col-s-4 card">
+			                    <div class="img-card">
+			                      <img src="<%= products[i][j].imagePath %>" alt="...">
+		                      	</div>
+		                     		<div class="container">
+			                     		<h3><b>$<%= products[i][j].price %></b></h3>
+										<h4><%= products[i][j].title %></h4>
+			                    	</div>
+			                </div>
+			            <% } %>
+					</div>
+				<% } %>
+				
+				<!-- Pagination -->
+				<!-- Pagination search -->
+				<% if (search) { %>
+					<% if (pages > 0) { %>
+						<div class="pagination">
+							<% if (current == 1) { %>
+								<a class="disabled" href=#>&laquo;</a>
+							<% } else { %>
+								<a href="/?search=<%= search %>&page=1">&laquo;</a>
+							<% } %>
+							<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+							<% if (i !== 1) { %>
+								<a class="disabled" >...</a>
+							<% } %>
+							<% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+								<% if (i == current) { %>
+									<a class="active" %>"><%= i %></a>
+								<% } else { %>
+									<a href="/?search=<%= search %>&page=<%= i %>" ><%= i %></a>
+								<% } %>
+								<% if (i == Number(current) + 4 && i < pages) { %>
+									<a class="disabled" >...</a>
+								<% } %>
+							<% } %>
+							<% if (current == pages) { %>
+								<a class="disabled" >&raquo;</a>
+							<% } else { %>
+								<a href="/?search=<%= search %>&page=<%= pages %>" >&raquo;</a>
+							<% } %>
+						</div>
+					<% } %>
+				<% } else { %>
+					<% if (pages > 0) { %>
+						<div class="pagination">
+							<% if (current == 1) { %>
+								<a class="disabled" href=#>&laquo;</a>
+							<% } else { %>
+								<a href="/products/1">&laquo;</a>
+							<% } %>
+							<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+							<% if (i !== 1) { %>
+								<a class="disabled" >...</a>
+							<% } %>
+							<% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+								<% if (i == current) { %>
+									<a class="active" %>"><%= i %></a>
+								<% } else { %>
+									<a href="/products/<%= i %>" ><%= i %></a>
+								<% } %>
+								<% if (i == Number(current) + 4 && i < pages) { %>
+									<a class="disabled" >...</a>
+								<% } %>
+							<% } %>
+							<% if (current == pages) { %>
+								<a class="disabled" >&raquo;</a>
+							<% } else { %>
+								<a href="/products/<%= pages %>" >&raquo;</a>
+							<% } %>
+						</div>
+					<% } %>
+				<% } %>
+				
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<div class=" col-4 col-s-4 information">
+			<h1>INFORMATION</h1>
+			<ul>
+		    	<li><a href="#">About Us</a></li>
+			 	<li><a href="#">Customer Service</a></li>
+			  	<li><a href="#">Template Settings</a></li>
+			  	<li><a href="#">Privacy Policy</a></li>
+			  	<li><a href="#">Site Map</a></li>
+			  	<li><a href="#">Blog</a></li>
+			  	<li><a href="#">Search Terms</a></li>
+			  	<li><a href="#">Advanced Search</a></li>
+			  	<li><a href="#">Orders and Returns</a></li>
+			  	<li><a href="#">Contact Us</a></li>
+		  	</ul>
+		</div>
+		<div class=" col-4 col-s-4 why-by-from-us">
+			<h1>WHY BUY FROM US</h1>
+			<ul>
+		    	<li><a href="#">Shipping & Returns</a></li>
+			 	<li><a href="#">Secure Shopping</a></li>
+			  	<li><a href="#">International Shipping</a></li>
+			  	<li><a href="#">Affiliates</a></li>
+			  	<li><a href="#">Group Sales</a></li>
+		  	</ul>
+		</div>
+		<div class=" col-4 col-s-4 my-account">
+			<h1>MY ACCOUNT</h1>
+			<ul>
+		    	<li><a href="#">Sign In</a></li>
+			 	<li><a href="#">View Cart</a></li>
+			  	<li><a href="#">My Wishlist</a></li>
+			  	<li><a href="#">Track My Order</a></li>
+			  	<li><a href="#">Help</a></li>
+		  	</ul>
+		</div>
+	</footer>
+
+	<script src="/javascripts/script.js"></script>
+</body>
+</html>
