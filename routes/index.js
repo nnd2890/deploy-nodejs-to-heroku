@@ -50,11 +50,11 @@ router.get('/', function(req, res, next) {
       });
   } else {
     Product
-      .find({})
+      .find({"status": 1})
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .exec(function(err, docs) {
-          Product.count().exec(function(err, count) {
+          Product.count({"status": 1}).exec(function(err, count) {
               for (var i = 0; i < docs.length; i += chunkSize) {
                 productChunks.push(docs.slice(i, i + chunkSize));
               }
@@ -87,11 +87,11 @@ router.get('/products/:page', function(req, res, next) {
   }
 
   Product
-      .find({})
+      .find({"status": 1})
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .exec(function(err, docs) {
-          Product.count().exec(function(err, count) {
+          Product.count({"status": 1}).exec(function(err, count) {
               for (var i = 0; i < docs.length; i += chunkSize) {
                 productChunks.push(docs.slice(i, i + chunkSize));
               }
@@ -123,11 +123,11 @@ router.get('/product-category/:category/:page', function(req, res, next) {
   var chunkSize = 3;
   var perPage = 3*chunkSize;
 
-  Product.find({ 'category': category })
+  Product.find({ 'category': category , "status": 1})
           .skip((perPage * page) - perPage)
           .limit(perPage)
           .exec(function(err, docs) {
-              Product.count({ 'category': category }).exec(function(err, count) {
+              Product.count({ 'category': category, "status": 1 }).exec(function(err, count) {
                   for (var i = 0; i < docs.length; i += chunkSize) {
                     productChunks.push(docs.slice(i, i + chunkSize));
                   }
@@ -171,6 +171,11 @@ router.post('/add-product', isAdmin, function(req, res, next) {
     var imagepath = req.body.imagepath;
     var category = req.body.category;
     var price = req.body.price;
+    var discount = req.body.discount;
+    var slideShow = req.body.slideShow;
+    if (slideShow = 'true') {
+      slideShow = true;
+    }
     var description = req.body.description;
     Product.findOne({'title': title}, function(err, product) {
       if (err) {
@@ -185,6 +190,8 @@ router.post('/add-product', isAdmin, function(req, res, next) {
         newProduct.imagePath = imagepath;
         newProduct.category = category;
         newProduct.price = price;
+        newProduct.discount = discount;
+        newProduct.slideShow = slideShow;
         newProduct.description = description;
         newProduct.save(function(err, result) {
           if (err) {
@@ -252,11 +259,12 @@ router.post('/edit-product/:id', function(req, res, next) {
 router.delete('/delete-product/:id', function(req, res, next) {
     console.log("route delete");
     let query = {_id: req.params.id};
-    Product.remove(query, function(err) {
+    Product.findOne(query, function(err, doc) {
         if(err) {
             console.log(err);
         }
-        res.send('Success');
+        doc.status = 0;
+        doc.save();
     });
 });
 

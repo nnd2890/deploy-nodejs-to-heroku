@@ -56,39 +56,29 @@
 			<div class="row title-special">
 				<h1>Special</h1>
 			</div>
-	      	<div class="row">
-                <div class="col-12 col-s-12 card">
-                    <div class="img-card">
-                      <img src="../images/img1.jpg" alt="...">
-                  	</div>
-                 		<div class="container">
-                     		<h3><b>$12</b></h3>
-							<h4>Book Title</h4>
-                    	</div>
-                </div>
-			</div>
 			<div class="row">
-                <div class="col-12 col-s-12 card">
-                    <div class="img-card">
-                      <img src="../images/img2.jpg" alt="...">
-                  	</div>
-                 		<div class="container">
-                     		<h3><b>$12</b></h3>
-							<h4>Book Title</h4>
-                    	</div>
-                </div>
+				<% for (var i = 0; i < products.length; i++) { %>
+					<% for(var j = 0; j < products[i].length; j++) { %>
+						<% if (products[i][j].discount) { %>
+							<div class="col-12 col-s-12 card">
+			                    <div class="img-card">
+			                      <img src="<%= products[i][j].imagePath %>" alt="...">
+		                      	</div>
+	                     		<div class="container">
+		                     		<h3>
+		                     			<!-- caculating the price after discountion -->
+		                     			<b class='discount-price'>$<%= products[i][j].price - (products[i][j].discount * products[i][j].price/100) %></b>
+	                 					<b class='nomal-price'>$<%= products[i][j].price %></b>
+		                     		</h3>
+									<h4><%= products[i][j].title %></h4>
+		                    	</div>
+		                    	<span class='sale'>Sale</span>
+			                </div>
+						<% } %>
+		            <% } %>
+				<% } %>
 			</div>
-			<div class="row">
-                <div class="col-12 col-s-12 card">
-                    <div class="img-card">
-                      <img src="../images/img3.jpg" alt="...">
-                  	</div>
-                 		<div class="container">
-                     		<h3><b>$12</b></h3>
-							<h4>Book Title</h4>
-                    	</div>
-                </div>
-			</div>
+			
 		</div>
 
 		<!-- Content -->

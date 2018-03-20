@@ -22,7 +22,7 @@ function showSlides(n) {
   for (i = 0; i < dots.length; i++) {
     dots[i].className = dots[i].className.replace("active", "");
   }
-  slides[slideIndex-1].style = "background: url(../images/img"+ slideIndex +".jpg); background-size: cover; display = 'block'";
+  slides[slideIndex-1].style.display = 'block';
   dots[slideIndex-1].className += " active";
 }
 
@@ -46,9 +46,8 @@ window.onclick = function(event) {
   }
 }
 
-
-
 $(document).ready(function() {
+  alert(1);
   $( ".delete-product" ).on( "click", function(e) {
     if(confirm("Are you sure you want to delete this?")){
       $target = $(e.target);

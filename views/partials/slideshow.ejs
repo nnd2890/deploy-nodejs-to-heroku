@@ -1,15 +1,20 @@
 <div class="slideshow-container">
-				<div class="mySlides fade">
+	<% for (var i = 0; i < products.length; i++) { %>
+		<% for(var j = 0; j < products[i].length; j++) { %>
+			<% if (products[i][j].slideShow) { %>
+				<div class="mySlides fade" style="background: url('<%= products[i][j].imagePath %>'); background-size: cover">
 				</div>
-				<div class="mySlides fade">
-				</div>
-				<div class="mySlides fade">
-				</div>
-				<div class="dots" style="text-align:center">
-					<span class="dot" onclick="currentSlide(1)"></span>
-					<span class="dot" onclick="currentSlide(2)"></span>
-					<span class="dot" onclick="currentSlide(3)"></span>
-				</div>
-			</div>
+			<% } %>
+		<% } %>
+	<% } %>
+	
+	<div class="dots" style="text-align:center">
+		<span class="dot" onclick="currentSlide(1)"></span>
+		<span class="dot" onclick="currentSlide(2)"></span>
+		<span class="dot" onclick="currentSlide(3)"></span>
+	</div>
+</div>
+
+
 			
 			

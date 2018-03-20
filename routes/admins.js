@@ -20,11 +20,11 @@ router.get('/products', isAdmin, function(req, res, next) {
   }
 
   Product
-      .find({})
+      .find({"status": 1})
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .exec(function(err, docs) {
-          Product.count().exec(function(err, count) {
+          Product.count({"status": 1}).exec(function(err, count) {
               for (var i = 0; i < docs.length; i += chunkSize) {
                 productChunks.push(docs.slice(i, i + chunkSize));
               }
@@ -55,11 +55,11 @@ router.get('/products/:page', function(req, res, next) {
   }
 
   Product
-      .find({})
+      .find({"status": 1})
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .exec(function(err, docs) {
-          Product.count().exec(function(err, count) {
+          Product.count({"status": 1}).exec(function(err, count) {
               for (var i = 0; i < docs.length; i += chunkSize) {
                 productChunks.push(docs.slice(i, i + chunkSize));
               }
