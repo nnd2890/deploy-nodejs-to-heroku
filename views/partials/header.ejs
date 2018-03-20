@@ -1,9 +1,107 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Acme Web Design | Wellcome</title>
+
+	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+</head>
+<body>
+	<header class="col-12 col-s-12">
+		<div class="col-9 col-s-9" id="branding">
+			<h1 class="col-6 col-s-6">Books<span class="highlight">Store</span></h1>
+			<div class="col-6 col-s-6 header-infor">
+				<i class="fas fa-phone"></i> <span>800-2345-6789; 800-2345-6788</span>
+			</div>
+		</div>
+
+		<div class="dropdown">
+		  <span class="dropbtn"><i onclick="myFunction()" class="drop-click fas fa-bars"></i></span>
+		  <div id="myDropdown" class="dropdown-content">
+		  	<% if (login) { %>
+			    <a href="/users/profile"><i class="fas fa-user"></i> My Account</a>
+			    <a href="/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+		   	<% } else { %>
+		   		<a href="/users/signin"><i class="fas fa-sign-in-alt"></i> Sing In</a>
+		    	<a href="/users/signup"><i class="fas fa-user-plus"></i> Sign Up</a>
+		    <% } %>
+		    <p>Welcome to our online store!</p>
+		  </div>
+		</div>
+
+	</header>
+
+	<main class="col-12 col-s-12">
+		<!-- Menu category -->
+		<div class="col-3 col-s-3 menu">
+			<div class="category-menu">
+				<h1>Categories</h1>
+				<ul>
+			    	<li><a href="/product-category/business/1">Business Books</a></li>
+				 	<li><a href="/product-category/children/1">Children's Book</a></li>
+				 	<hr>
+				  	<li><a href="#">Others</a></li>
+				  	<li><a href="#">CD/DVD</a></li>
+				  	<li><a href="#">Cards</a></li>
+				  	<li><a href="#">Calendars</a></li>
+				  	<li><a href="#">Blanks</a></li>
+				  	<li><a href="#">Rarity</a></li>
+				  	<li><a href="#">Antiques</a></li>
+				  	<li><a href="#">Writing Materials</a></li>
+			  	</ul>
+			</div>
+
+			<div class="row title-special">
+				<h1>Special</h1>
+			</div>
+	      	<div class="row">
+                <div class="col-12 col-s-12 card">
+                    <div class="img-card">
+                      <img src="../images/img1.jpg" alt="...">
+                  	</div>
+                 		<div class="container">
+                     		<h3><b>$12</b></h3>
+							<h4>Book Title</h4>
+                    	</div>
+                </div>
+			</div>
+			<div class="row">
+                <div class="col-12 col-s-12 card">
+                    <div class="img-card">
+                      <img src="../images/img2.jpg" alt="...">
+                  	</div>
+                 		<div class="container">
+                     		<h3><b>$12</b></h3>
+							<h4>Book Title</h4>
+                    	</div>
+                </div>
+			</div>
+			<div class="row">
+                <div class="col-12 col-s-12 card">
+                    <div class="img-card">
+                      <img src="../images/img3.jpg" alt="...">
+                  	</div>
+                 		<div class="container">
+                     		<h3><b>$12</b></h3>
+							<h4>Book Title</h4>
+                    	</div>
+                </div>
+			</div>
+		</div>
+
+		<!-- Content -->
+		<div class="col-9 col-s-9 content">
+
+			<div class="col-6 col-s-6 search">
+				<form action="/" method="get">
+					<input type="text" name="search" placeholder="Search">
+					<button type="submit"><i class="fas fa-search"></i></button>
+				</form>
+			</div>
+			<div class="col-2 col-s-2 shopping-cart">
+				<i class="fas fa-shopping-cart"></i> 1 <span>item(s)</span>
+			</div>
+
+			

@@ -11,14 +11,12 @@ router.use(csrfProtection);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(req.query.search);
-  console.log(req.query.page);
   var successMsg = req.flash('success')[0];
   
   // Set home page will appear
   var productChunks = [];
   var chunkSize = 3;
-  var perPage = 1*chunkSize;
+  var perPage = 3*chunkSize;
   var page = 1;
 
   if (req.params.page > 1) {
@@ -81,7 +79,7 @@ router.get('/products/:page', function(req, res, next) {
   // Set home page will appear
   var productChunks = [];
   var chunkSize = 3;
-  var perPage = 1*chunkSize;
+  var perPage = 3*chunkSize;
   var page = 1;
 
   if (req.params.page > 1) {
@@ -111,42 +109,41 @@ router.get('/products/:page', function(req, res, next) {
       });
 });
 
-// // paginated product search router
-// router.get('/?search=:search/:page', function(req, res, next) {
-//   console.log(req.query.search);
-//   var successMsg = req.flash('success')[0];
-//   // Set home page will appear
-//   var productChunks = [];
-//   var chunkSize = 3;
-//   var perPage = 1*chunkSize;
-//   var page = 1;
+// Page Category Route
+router.get('/product-category/:category/:page', function(req, res, next) {
+  
+  var category = req.params.category;
+  var page = req.params.page || 1;
 
-//   if (req.params.page > 1) {
-//     var page = req.params.page;
-//   }
+  // Set Sesion category and page
+  req.session.categoryName = category;
 
-//   Product
-//       .find({"title": req.params.search})
-//       .skip((perPage * page) - perPage)
-//       .limit(perPage)
-//       .exec(function(err, docs) {
-//           Product.count().exec(function(err, count) {
-//               for (var i = 0; i < docs.length; i += chunkSize) {
-//                 productChunks.push(docs.slice(i, i + chunkSize));
-//               }
-//               if (err) return next(err)
-//               res.render('shop/index', {
-//                   products: productChunks,
-//                   current: page,
-//                   pages: Math.ceil(count / perPage),
-//                   title: 'Shopping Cart',
-//                   search: req.params.search,
-//                   successMsg: successMsg,
-//                   noMessages: !successMsg
-//               })
-//           })
-//       });
-// });
+  var successMsg = req.flash('success')[0];
+  var productChunks = [];
+  var chunkSize = 3;
+  var perPage = 3*chunkSize;
+
+  Product.find({ 'category': category })
+          .skip((perPage * page) - perPage)
+          .limit(perPage)
+          .exec(function(err, docs) {
+              Product.count({ 'category': category }).exec(function(err, count) {
+                  for (var i = 0; i < docs.length; i += chunkSize) {
+                    productChunks.push(docs.slice(i, i + chunkSize));
+                  }
+                  if (err) return next(err)
+                  res.render('shop/category', {
+                      products: productChunks,
+                      current: page,
+                      pages: Math.ceil(count / perPage),
+                      title: 'Shopping Cart',
+                      successMsg: successMsg,
+                      noMessages: !successMsg,
+                      categoryName: req.session.categoryName
+                  });
+              });
+          });
+});
 
 // Handle add product
 router.get('/add-product', isAdmin, function(req, res, next) {
@@ -330,42 +327,6 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
     req.session.cart = null;
     res.redirect('/');
   });
-});
-
-// Page Category Route
-router.get('/product-category/:category/:page', function(req, res, next) {
-  
-  var category = req.params.category;
-  var page = req.params.page || 1;
-
-  // Set Sesion category and page
-  req.session.categoryName = category;
-
-  var successMsg = req.flash('success')[0];
-  var productChunks = [];
-  var chunkSize = 3;
-  var perPage = 1*chunkSize;
-
-  Product.find({ 'category': category })
-          .skip((perPage * page) - perPage)
-          .limit(perPage)
-          .exec(function(err, docs) {
-              Product.count({ 'category': category }).exec(function(err, count) {
-                  for (var i = 0; i < docs.length; i += chunkSize) {
-                    productChunks.push(docs.slice(i, i + chunkSize));
-                  }
-                  if (err) return next(err)
-                  res.render('shop/category', {
-                      products: productChunks,
-                      current: page,
-                      pages: Math.ceil(count / perPage),
-                      title: 'Shopping Cart',
-                      successMsg: successMsg,
-                      noMessages: !successMsg,
-                      categoryName: req.session.categoryName
-                  });
-              });
-          });
 });
 
 module.exports = router;

@@ -1,80 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Acme Web Design | Wellcome</title>
+<% include ../partials/header %>
+<% include ../partials/slideshow %>
+<div class="list-content">
 
-	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
-</head>
-<body>
-	<header class="col-12 col-s-12">
-		<div class="col-9 col-s-9" id="branding">
-			<h1 class="col-6 col-s-6">Books<span class="highlight">Store</span></h1>
-			<div class="col-6 col-s-6 header-infor">
-				<i class="fas fa-phone"></i> <span>800-2345-6789; 800-2345-6788</span>
-			</div>
-		</div>
-
-		<div class="dropdown">
-		  <span class="dropbtn"><i onclick="myFunction()" class="drop-click fas fa-bars"></i></span>
-		  <div id="myDropdown" class="dropdown-content">
-		    <a href="#"><i class="fas fa-user"></i> My Account</a>
-		    <a href="#"><i class="fas fa-sign-in-alt"></i> Sing In</a>
-		    <a href="#"><i class="fas fa-user-plus"></i> Sign Up</a>
-		    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
-		    <p>Welcome to our online store!</p>
-		  </div>
-		</div>
-
-	</header>
-
-	<main class="col-12 col-s-12">
-		<div class="col-3 col-s-3 menu">
-			<div class="category-menu">
-				<h1>Categories</h1>
-				<ul>
-			    	<li><a href="#">Magazines</a></li>
-				 	<li><a href="#">Comics</a></li>
-				  	<li><a href="#">Books</a></li>
-				  	<li><a href="#">CD/DVD</a></li>
-				  	<li><a href="#">Cards</a></li>
-				  	<li><a href="#">Calendars</a></li>
-				  	<li><a href="#">Blanks</a></li>
-				  	<li><a href="#">Rarity</a></li>
-				  	<li><a href="#">Antiques</a></li>
-				  	<li><a href="#">Writing Materials</a></li>
-			  	</ul>
-			</div>
-			<div class="special-menu">Special Menu</div>
-		</div>
-		<div class="col-9 col-s-9 content">
-			<div class="col-6 col-s-6 search">
-				<form action="/" method="get">
-					<input type="text" name="search" placeholder="Search">
-					<button type="submit"><i class="fas fa-search"></i></button>
-				</form>
-			</div>
-			<div class="col-2 col-s-2 shopping-cart">
-				<i class="fas fa-shopping-cart"></i> 1 <span>item(s)</span>
-			</div>
-
-			<div class="slideshow-container">
-				<div class="mySlides fade">
+				<div class="row title">
+					<h1>Books</h1>
 				</div>
-				<div class="mySlides fade">
-				</div>
-				<div class="mySlides fade">
-				</div>
-				<div class="dots" style="text-align:center">
-					<span class="dot" onclick="currentSlide(1)"></span>
-					<span class="dot" onclick="currentSlide(2)"></span>
-					<span class="dot" onclick="currentSlide(3)"></span>
-				</div>
-			</div>
-
-			<div class="list-content">
 				
 				<div class="row">
 			        <div id="success" class="alert alert-success <% if (noMessages) { %> hidden <% } %> ">
@@ -158,49 +88,5 @@
 						</div>
 					<% } %>
 				<% } %>
-				
-			</div>
-		</div>
-	</main>
-
-	<footer>
-		<div class=" col-4 col-s-4 information">
-			<h1>INFORMATION</h1>
-			<ul>
-		    	<li><a href="#">About Us</a></li>
-			 	<li><a href="#">Customer Service</a></li>
-			  	<li><a href="#">Template Settings</a></li>
-			  	<li><a href="#">Privacy Policy</a></li>
-			  	<li><a href="#">Site Map</a></li>
-			  	<li><a href="#">Blog</a></li>
-			  	<li><a href="#">Search Terms</a></li>
-			  	<li><a href="#">Advanced Search</a></li>
-			  	<li><a href="#">Orders and Returns</a></li>
-			  	<li><a href="#">Contact Us</a></li>
-		  	</ul>
-		</div>
-		<div class=" col-4 col-s-4 why-by-from-us">
-			<h1>WHY BUY FROM US</h1>
-			<ul>
-		    	<li><a href="#">Shipping & Returns</a></li>
-			 	<li><a href="#">Secure Shopping</a></li>
-			  	<li><a href="#">International Shipping</a></li>
-			  	<li><a href="#">Affiliates</a></li>
-			  	<li><a href="#">Group Sales</a></li>
-		  	</ul>
-		</div>
-		<div class=" col-4 col-s-4 my-account">
-			<h1>MY ACCOUNT</h1>
-			<ul>
-		    	<li><a href="#">Sign In</a></li>
-			 	<li><a href="#">View Cart</a></li>
-			  	<li><a href="#">My Wishlist</a></li>
-			  	<li><a href="#">Track My Order</a></li>
-			  	<li><a href="#">Help</a></li>
-		  	</ul>
-		</div>
-	</footer>
-
-	<script src="/javascripts/script.js"></script>
-</body>
-</html>
+</div>
+<% include ../partials/footer %>

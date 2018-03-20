@@ -39,6 +39,12 @@ ul{
 .text-center {
 	text-align: center;
 }
+/*Warnning danger*/
+div.alert-danger {
+	background-color: #f2dede;
+	color: #a94442;
+	padding: 10px 15px;
+}
 
 .disabled {
 	background-color: darkGray;
@@ -69,6 +75,69 @@ ul{
 
 .pagination a:hover:not(.active) {
 	background-color: #ddd;
+}
+
+/*Title*/
+div.title{
+	margin-top: 15px;
+	padding: 0 15px;
+}
+
+div.title h1 {
+	background-color: #009587;
+	height: 68px;
+	font-size: 2.5vw;
+	padding: 15px;
+	margin: 0;
+}
+
+.float-right {
+	float: right;
+}
+
+
+/*Set form global*/
+div.form {
+	display:block;
+	background-color: #fff;
+    padding: 20px 100px;
+}
+
+div.form h2 {
+	color: #d66969
+}
+
+div.form p.infro-form {
+    color: #c2b5b4;
+    padding: 10px 0;
+    
+}
+
+div.form label {
+	color: #000;
+	font-weight: bold;
+}
+
+div.form input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 15px 0;
+}
+
+div.form .require {
+	color: #ff0000;
+}
+
+div.form button {
+	display: block;
+	cursor: pointer;
+	float: left;
+	background-color: #fe5621;
+	color: #ffede7;
+	border: none;
+	padding: 10px 20px;
+	margin-top: 40px;
+	font-size: 18px;
 }
 
 
@@ -217,8 +286,24 @@ main{
 	color: #363f45;
 }
 
+/*Title*/
+div.title-special{
+	margin-top: 15px;
+	padding: 0;
+}
+
+div.title-special h1 {
+	background-color: #009587;
+	height: 68px;
+	font-size: 2.5vw;
+	padding: 15px;
+	margin: 0;
+}
+
+
 .content{
 	float: right;
+	min-height: 1500px;
 }
 
 .content .search, .shopping-cart{
@@ -388,6 +473,19 @@ div.card h4 {
 	font-size: 16px;
 }
 
+/*=====================================Form*/
+/*Form sigin*/
+p.singup-instead {
+	display: block;
+	clear: both;
+	color: #c2b5b4;
+	padding-top: 10px;
+}
+
+p.singup-instead a {
+	text-decoration: none;
+	color: #000;
+}
 
 /*======================================================================================*/
 /* Footer */
@@ -409,7 +507,7 @@ footer li a{
 }
 
 footer li a:hover{
-	color: #363f45;
+	color: #d7d9da;
 }
 /*======================================================================================*/
 /* Reponsive page */

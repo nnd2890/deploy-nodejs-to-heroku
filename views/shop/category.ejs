@@ -1,67 +1,90 @@
 <% include ../partials/header %>
-  <% include ../partials/navbar %>
 
-  <div class="container">
-    <% include ../partials/sidebar %>
-    <div class="col-lg-9">
-      <div class="row">
-        <div id="success" class="alert alert-success <% if (noMessages) { %> hidden <% } %> ">
-          <%= successMsg %>
-        </div>
-      </div>
-
-      <% for (var i = 0; i < products.length; i++) { %>
-        <div class="row">
-            <% for(var j = 0; j < products[i].length; j++) { %>
-                <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
-                      <img src="<%= products[i][j].imagePath %>" alt="...">
-                      <div class="caption">
-                        <h3><%= products[i][j].title %></h3>
-                        <p class="description"><%= products[i][j].description %></p>
-                        <div class="clearfix">
-                            <div class="pull-left price">$<%= products[i][j].price %></div>
-                            <a href="/add-to-cart/<%= products[i][j]._id %>" class="btn btn-success pull-right" role="button">Add To Shopping Cart</a>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-            <% } %>
-        </div>
-      <% } %>
-
-      <!-- Pagination -->
-      <div class="row text-center">
-        <% if (pages > 0) { %>
-          <ul class="pagination text-center">
-              <% if (current == 1) { %>
-                  <li class="disabled"><a>First</a></li>
-              <% } else { %>
-                  <li><a href="/product-category/<%= categoryName %>/1">First</a></li>
-              <% } %>
-              <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-              <% if (i !== 1) { %>
-                  <li class="disabled"><a>...</a></li>
-              <% } %>
-              <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
-                  <% if (i == current) { %>
-                      <li class="active"><a><%= i %></a></li>
-                  <% } else { %>
-                      <li><a href="/product-category/<%= categoryName %>/<%= i %>"><%= i %></a></li>
-                  <% } %>
-                  <% if (i == Number(current) + 4 && i < pages) { %>
-                      <li class="disabled"><a>...</a></li>
-                  <% } %>
-              <% } %>
-              <% if (current == pages) { %>
-                  <li class="disabled"><a>Last</a></li>
-              <% } else { %>
-                  <li><a href="/product-category/<%= categoryName %>/<%= pages %>">Last</a></li>
-              <% } %>
-          </ul>
-        <% } %>
-      </div>
-    </div>
-  </div>
-  
+				<div class="row title">
+					<h1>Category</h1>
+				</div>
+				
+				<div class="row">
+			        <div id="success" class="alert alert-success <% if (noMessages) { %> hidden <% } %> ">
+			          <%= successMsg %>
+			        </div>
+		      	</div>
+		      	<% for (var i = 0; i < products.length; i++) { %>
+			      	<div class="row">
+						<% for(var j = 0; j < products[i].length; j++) { %>
+			                <div class="col-4 col-s-4 card">
+			                    <div class="img-card">
+			                      <img src="<%= products[i][j].imagePath %>" alt="...">
+		                      	</div>
+		                     		<div class="container">
+			                     		<h3><b>$<%= products[i][j].price %></b></h3>
+										<h4><%= products[i][j].title %></h4>
+			                    	</div>
+			                </div>
+			            <% } %>
+					</div>
+				<% } %>
+				
+				<!-- Pagination -->
+				<!-- Pagination search -->
+				<% if (search) { %>
+					<% if (pages > 0) { %>
+						<div class="pagination">
+							<% if (current == 1) { %>
+								<a class="disabled" href=#>&laquo;</a>
+							<% } else { %>
+								<a href="/?search=<%= search %>&page=1">&laquo;</a>
+							<% } %>
+							<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+							<% if (i !== 1) { %>
+								<a class="disabled" >...</a>
+							<% } %>
+							<% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+								<% if (i == current) { %>
+									<a class="active" %>"><%= i %></a>
+								<% } else { %>
+									<a href="/?search=<%= search %>&page=<%= i %>" ><%= i %></a>
+								<% } %>
+								<% if (i == Number(current) + 4 && i < pages) { %>
+									<a class="disabled" >...</a>
+								<% } %>
+							<% } %>
+							<% if (current == pages) { %>
+								<a class="disabled" >&raquo;</a>
+							<% } else { %>
+								<a href="/?search=<%= search %>&page=<%= pages %>" >&raquo;</a>
+							<% } %>
+						</div>
+					<% } %>
+				<% } else { %>
+					<% if (pages > 0) { %>
+						<div class="pagination">
+							<% if (current == 1) { %>
+								<a class="disabled" href=#>&laquo;</a>
+							<% } else { %>
+								<a href="/product-category/1">&laquo;</a>
+							<% } %>
+							<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+							<% if (i !== 1) { %>
+								<a class="disabled" >...</a>
+							<% } %>
+							<% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+								<% if (i == current) { %>
+									<a class="active" %>"><%= i %></a>
+								<% } else { %>
+									<a href="/product-category/<%= i %>" ><%= i %></a>
+								<% } %>
+								<% if (i == Number(current) + 4 && i < pages) { %>
+									<a class="disabled" >...</a>
+								<% } %>
+							<% } %>
+							<% if (current == pages) { %>
+								<a class="disabled" >&raquo;</a>
+							<% } else { %>
+								<a href="/product-category/<%= pages %>" >&raquo;</a>
+							<% } %>
+						</div>
+					<% } %>
+				<% } %>
+			
 <% include ../partials/footer %>
