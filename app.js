@@ -52,7 +52,10 @@ app.use(function(req, res, next) {
   res.locals.session = req.session || null;
   res.locals.cart = req.session.cart || null;
   res.locals.user = req.user || null;
-  res.locals.search = null;
+  res.locals.search = req.session.search || null;
+  res.locals.productSearch = req.session.productSearch || null;
+  res.locals.products = req.session.products || null;
+
   next();
 });
 

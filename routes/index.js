@@ -24,7 +24,6 @@ router.get('/', function(req, res, next) {
   }
 
   if (req.query.search) {
-    console.log(req.query.search);
     var regex = new RegExp(escapeRegex(req.query.search), 'gi');
     Product
       .find({"title": regex})
@@ -32,13 +31,13 @@ router.get('/', function(req, res, next) {
       .limit(perPage)
       .exec(function(err, docs) {
           Product.count({"title": regex}).exec(function(err, count) {
-            console.log(count);
               for (var i = 0; i < docs.length; i += chunkSize) {
                 productChunks.push(docs.slice(i, i + chunkSize));
               }
               if (err) return next(err)
+              req.session.productSearch = productChunks;
               res.render('shop/index', {
-                  products: productChunks,
+                  // products: productChunks,
                   current: page,
                   pages: Math.ceil(count / perPage),
                   search: req.query.search,
@@ -59,12 +58,11 @@ router.get('/', function(req, res, next) {
                 productChunks.push(docs.slice(i, i + chunkSize));
               }
               if (err) return next(err)
+              req.session.products = productChunks;
               res.render('shop/index', {
-                  products: productChunks,
                   current: page,
                   pages: Math.ceil(count / perPage),
                   title: 'Shopping Cart',
-                  search: req.query.search,
                   successMsg: successMsg,
                   noMessages: !successMsg
               })
