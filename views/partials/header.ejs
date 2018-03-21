@@ -71,6 +71,9 @@
 	                 					<b class='nomal-price'>$<%= products[i][j].price %></b>
 		                     		</h3>
 									<h4><%= products[i][j].title %></h4>
+									<a href="/add-to-cart/<%= products[i][j]._id %>" class="add-to-cart" role="button">
+										<i class="fas fa-shopping-cart"></i>
+									</a>
 		                    	</div>
 		                    	<span class='sale'>Sale</span>
 			                </div>
@@ -90,8 +93,12 @@
 					<button type="submit"><i class="fas fa-search"></i></button>
 				</form>
 			</div>
-			<div class="col-2 col-s-2 shopping-cart">
-				<i class="fas fa-shopping-cart"></i> 1 <span>item(s)</span>
-			</div>
+			<a class="col-2 col-s-2 shopping-cart" href="/shopping-cart">
+				<i class="fas fa-shopping-cart"></i> <% if (session.cart) { %>
+              <span class="badge">
+                <%= session.cart.totalQty%>
+              </span>
+            <% } %> <span>item(s)</span>
+			</a>
 
 			

@@ -1,47 +1,67 @@
 <% include ../partials/header %>
-<% include ../partials/navbar %>
+
+<div style="padding: 15px;">
+   <table id="shopping-cart-table">
+      <tr>
+        <th>Image</th>
+        <th>Product Name</th>
+        <th>Edit</th>
+        <th>Unit Price</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+      </tr>
+      <tr>
+        <td><img src="../images/img1.jpg" alt=""></td>
+        <td>Maria Anders</td>
+        <td><i class="fas fa-edit"></i></td>
+        <td>$15</td>
+        <td>2</td>
+        <td>$30</td>
+      </tr>
+    </table> 
+</div>
+
+
+
+<!--
 
 <% if (products) { %>
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3">
-            <ul class="list-group">
-                <% products.forEach( function(element) { %>
-                    <li class="list-group-item">
-                        <span class="badge"><%= element.qty %></span>
-                        <strong><%= element.item.title %></strong>
-                        <span class="lable lable-success">$<%= element.price %></span>
-                        <div class="btn-group">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Action 
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="/reduce/<%= element._id %>">Reduce by 1</a></li>
-                                <li><a href="/remove/<%= element._id %>">Reduce All</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                <% }); %>
-            </ul>
-        </div>
+        <ul class="list-group">
+            <% products.forEach( function(element) { %>
+                <li class="list-group-item">
+                    <span class="badge"><%= element.qty %></span>
+                    <strong><%= element.item.title %></strong>
+                    <span class="lable lable-success">$<%= element.price %></span>
+                    <div class="btn-group">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Action 
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/reduce/<%= element._id %>">Reduce by 1</a></li>
+                            <li><a href="/remove/<%= element._id %>">Reduce All</a></li>
+                        </ul>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
     </div>
 
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3">
             <strong>Total: <%= totalPrice %></strong>
-        </div>
     </div>
     <hr>
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3">
-            <a href="/checkout"><button type="button" class="btn btn-success">Check Out</button></a>
-        </div>
+            <a href="/checkout">
+                <button type="button" class="btn btn-success">Check Out</button>
+            </a>
     </div>
 <% } else { %>
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3">
             <h2>No Item in Cart</h2>
-        </div>
     </div>
 <% } %>
+
+-->
 
 <% include ../partials/footer %>

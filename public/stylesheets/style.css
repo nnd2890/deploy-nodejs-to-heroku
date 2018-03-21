@@ -266,7 +266,7 @@ header i{
 /*======================================================================================*/
 main{
 	background-color: #fff;
-	color: #fefefe;
+	color: #a4aeb4;;
 }
 
 .menu{
@@ -328,6 +328,7 @@ div.title-special h1 {
 }
 
 .content .search, .shopping-cart{
+	display: block;
 	height: 68px;
 	background-color: #ffffff;
 	color: #9ca7ad;
@@ -464,6 +465,7 @@ div.title-special h1 {
 
 /*Create Card*/
 div.card {
+	text-align: center;
 	position: relative;
 	margin: 0;
 	padding: 15px;
@@ -495,6 +497,16 @@ div.card h4 {
 	font-size: 16px;
 }
 
+div.card .add-to-cart{
+	display: inline-block;
+    background-color: #fe5621;
+    color: #FFFFFF;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+}
+
 /*=====================================Form*/
 /*Form sigin*/
 p.singup-instead {
@@ -507,6 +519,31 @@ p.singup-instead {
 p.singup-instead a {
 	text-decoration: none;
 	color: #000;
+}
+
+/* Table shopping cart */
+#shopping-cart-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#shopping-cart-table td, #shopping-cart-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    cursor: pointer;
+}
+
+#shopping-cart-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: #000;
+}
+
+#shopping-cart-table td img{
+    max-width: 100%;
+    height: auto;
+    max-height: 40px;
 }
 
 /*======================================================================================*/
