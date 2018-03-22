@@ -1,67 +1,40 @@
 <% include ../partials/header %>
 
 <div style="padding: 15px;">
-   <table id="shopping-cart-table">
-      <tr>
-        <th>Image</th>
-        <th>Product Name</th>
-        <th>Edit</th>
-        <th>Unit Price</th>
-        <th>Qty</th>
-        <th>Subtotal</th>
-      </tr>
-      <tr>
-        <td><img src="../images/img1.jpg" alt=""></td>
-        <td>Maria Anders</td>
-        <td><i class="fas fa-edit"></i></td>
-        <td>$15</td>
-        <td>2</td>
-        <td>$30</td>
-      </tr>
-    </table> 
+    <% if (productsCart) { %>
+       <table id="shopping-cart-table">
+          <tr>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+          </tr>
+          <% productsCart.forEach( function(element) { %>
+              <tr>
+                <td><img src="<%= element.item.imagePath %>" alt=""></td>
+                <td><%= element.item.title %></td>
+                <td><a class="qty" href="/reduce/<%= element.item._id %>">-</a> <%= element.qty %> <a class="qty" href="/plus/<%= element.item._id %>">+</a></td>
+                <td>$<%= element.item.price %></td>
+                <td>$<%= element.price %></td>
+                <td><a href="/remove/<%= element.item._id %>"><i class="fas fa-trash-alt"></i></a></td>
+              </tr>
+          <% }); %>
+        </table>
+    <% } else { %>
+        <div class="row">
+                <h2>No Item in Cart</h2>
+        </div>
+    <% } %>
+
+    <div class="total-checkout col-6 col-s-8 float-right">
+        <strong><span class="float-left">Total: </span><span class="float-right">$<%= totalPrice %></span></strong>
+        <hr class="clear">
+        <a href="/checkout" class="checkout">
+            Check Out
+        </a>
+    </div>
 </div>
-
-
-
-<!--
-
-<% if (products) { %>
-    <div class="row">
-        <ul class="list-group">
-            <% products.forEach( function(element) { %>
-                <li class="list-group-item">
-                    <span class="badge"><%= element.qty %></span>
-                    <strong><%= element.item.title %></strong>
-                    <span class="lable lable-success">$<%= element.price %></span>
-                    <div class="btn-group">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Action 
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/reduce/<%= element._id %>">Reduce by 1</a></li>
-                            <li><a href="/remove/<%= element._id %>">Reduce All</a></li>
-                        </ul>
-                    </div>
-                </li>
-            <% }); %>
-        </ul>
-    </div>
-
-    <div class="row">
-            <strong>Total: <%= totalPrice %></strong>
-    </div>
-    <hr>
-    <div class="row">
-            <a href="/checkout">
-                <button type="button" class="btn btn-success">Check Out</button>
-            </a>
-    </div>
-<% } else { %>
-    <div class="row">
-            <h2>No Item in Cart</h2>
-    </div>
-<% } %>
-
--->
 
 <% include ../partials/footer %>

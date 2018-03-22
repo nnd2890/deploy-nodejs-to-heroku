@@ -1,0 +1,45 @@
+<% include ../partials/headerAdmin %>
+
+        <table class="table table-bordered">
+          <tr>
+            <th>OrderId</th>
+            <th>UserName</th>
+            <th>Adrress</th>
+            <th>TotalQty</th>
+            <th>TotalPrice</th>
+            <th>Status</th>
+          </tr>
+          <% for (var i = 0; i < orders.length; i++) { %>
+              <tr>
+                <td><%= orders[i]._id %></td>
+                <td><%= orders[i].name %></td>
+                <td><%= orders[i].address %></td>
+                  <td><%= orders[i].cart.totalQty %></td>
+                  <td>$<%= orders[i].cart.totalPrice %></td>
+                <td>
+                  <% if ( orders[i].status == 1 ) { %>
+                    <select class="status-order" data-id="<%= orders[i]._id %>">
+                      <option value="1" selected >Processing</option>
+                      <option value="2">Done</option>
+                      <option value="0">Cancel</option>
+                    </select>
+                  <% } else if ( orders[i].status == 2 ) { %>
+                    <select class="status-order" data-id="<%= orders[i]._id %>" >
+                      <option value="1">Processing</option>
+                      <option value="2" selected >Done</option>
+                      <option value="0">Cancel</option>
+                    </select>
+                  <% } else { %>
+                    <select class="status-order" data-id="<%= orders[i]._id %>" >
+                      <option value="1">Processing</option>
+                      <option value="2">Done</option>
+                      <option value="0" selected >Cancel</option>
+                    </select>
+                  <% } %>
+                </td>
+              </tr>
+          <% }; %>    
+        </table>
+        <input type="hidden" id="_csrf" name="_csrf" value="<%= csrfToken %>">
+
+<% include ../partials/footerAdmin %>

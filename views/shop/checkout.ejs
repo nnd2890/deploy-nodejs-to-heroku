@@ -1,26 +1,19 @@
 <% include ../partials/header %>
-<% include ../partials/navbar %>
 
-<div class="row">
-    <div class="col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3">
-        <h1>Check Out</h1>
+    <div class="form">
+        <h2>Check Out</h2>
         <h4>Your Total: $<%= total %></h4>
-        <div id="charge-error" class="alert alert-danger <% if (noError) {%>hidden<% } %>">
-            <%= errMsg %>
-        </div>
-        <form action="/checkout" method="post" id="checkout-form">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name">
-            </div>
-            <div class="form-group">
-                <label for="address">Address</label>
-                <input type="address" class="form-control" id="address" name="address">
-            </div>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button type="submit" class="btn btn-primary">Check Out</button>
+        <hr>
+        <p class="infro-form">Please enter the information.</p>
+        <form action="/checkout" method="post">
+          <label for="name">Name</label><span class="require">*</span>
+          <input type="text" id="name" name="name">
+          <label for="address">Address</label><span class="require">*</span>
+          <input type="address" id="address" name="address">
+          <div><span class="require float-right">* Required Fields</span></div>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="row" type="submit">Check Out</button>
         </form>
     </div>
-</div>
 
 <% include ../partials/footer %>
