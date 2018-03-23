@@ -27,7 +27,7 @@
 				                     		<div class="container">
 					                     		<h3><b>$<%= productSearch[i][j].price %></b></h3>
 												<h4><%= productSearch[i][j].title %></h4>
-												<a href="/add-to-cart/<%= products[i][j]._id %>" class="add-to-cart" role="button">
+												<a href="/add-to-cart/<%= productSearch[i][j]._id %>" class="add-to-cart" role="button">
 													<i class="fas fa-shopping-cart"></i>
 												</a>
 					                    	</div>
@@ -70,23 +70,25 @@
 						</div>
 					<% } %>
 				<% } else { %>
-					<% for (var i = 0; i < products.length; i++) { %>
-				      	<div class="row">
-							<% for(var j = 0; j < products[i].length; j++) { %>
-				                <div class="col-4 col-s-4 card">
-				                    <div class="img-card">
-				                      <img src="<%= products[i][j].imagePath %>" alt="...">
-			                      	</div>
-			                     		<div class="container">
-				                     		<h3><b>$<%= products[i][j].price %></b></h3>
-											<h4><%= products[i][j].title %></h4>
-											<a href="/add-to-cart/<%= products[i][j]._id %>" class="add-to-cart" role="button">
-												<i class="fas fa-shopping-cart"></i>
-											</a>
-				                    	</div>
-				                </div>
-				            <% } %>
-						</div>
+					<% if (products) {  %>
+						<% for (var i = 0; i < products.length; i++) { %>
+					      	<div class="row">
+								<% for(var j = 0; j < products[i].length; j++) { %>
+					                <div class="col-4 col-s-4 card">
+					                    <div class="img-card">
+					                      <img src="<%= products[i][j].imagePath %>" alt="...">
+				                      	</div>
+				                     		<div class="container">
+					                     		<h3><b>$<%= products[i][j].price %></b></h3>
+												<h4><%= products[i][j].title %></h4>
+												<a href="/add-to-cart/<%= products[i][j]._id %>" class="add-to-cart" role="button">
+													<i class="fas fa-shopping-cart"></i>
+												</a>
+					                    	</div>
+					                </div>
+					            <% } %>
+							</div>
+						<% } %>
 					<% } %>
 
 					<% if (pages > 0) { %>

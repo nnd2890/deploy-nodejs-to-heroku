@@ -1,9 +1,11 @@
 <div class="slideshow-container">
-	<% for (var i = 0; i < products.length; i++) { %>
-		<% for(var j = 0; j < products[i].length; j++) { %>
-			<% if (products[i][j].slideShow) { %>
-				<div class="mySlides fade" style="background: url('<%= products[i][j].imagePath %>') center; background-size: cover">
-				</div>
+	<% if (products) {  %>
+		<% for (var i = 0; i < products.length; i++) { %>
+			<% for(var j = 0; j < products[i].length; j++) { %>
+				<% if (products[i][j].slideShow) { %>
+					<div class="mySlides fade" style="background: url('<%= products[i][j].imagePath %>') center; background-size: cover">
+					</div>
+				<% } %>
 			<% } %>
 		<% } %>
 	<% } %>

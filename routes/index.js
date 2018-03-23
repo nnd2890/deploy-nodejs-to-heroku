@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
               if (err) return next(err)
               req.session.productSearch = productChunks;
               res.render('shop/index', {
-                  // products: productChunks,
+                  productSearch: productChunks,
                   current: page,
                   pages: Math.ceil(count / perPage),
                   search: req.query.search,
@@ -63,6 +63,7 @@ router.get('/', function(req, res, next) {
                   current: page,
                   pages: Math.ceil(count / perPage),
                   title: 'Shopping Cart',
+                  products: productChunks,
                   successMsg: successMsg,
                   noMessages: !successMsg
               })
@@ -314,7 +315,7 @@ router.get('/shopping-cart', function(req, res, next) {
     return res.render('shop/shopping-cart', {title: 'Cart', products: null});
   }
   var cart = new Cart(req.session.cart);
-  res.render('shop/shopping-cart', {title: 'Cart', productsCart: cart.generateArray(), totalPrice: cart.totalPrice});
+  res.render('shop/shopping-cart', {title: 'Cart', products: cart.generateArray(), totalPrice: cart.totalPrice});
 });
 
 router.get('/checkout', isLoggedIn, function(req, res, next) {

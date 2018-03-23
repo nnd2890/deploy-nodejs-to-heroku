@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 
 <div style="padding: 15px;">
-    <% if (productsCart.length > 0) { %>
+    <% if (products) { %>
        <table id="shopping-cart-table">
           <tr>
             <th>Image</th>
@@ -11,7 +11,7 @@
             <th>Subtotal</th>
             <th>Action</th>
           </tr>
-          <% productsCart.forEach( function(element) { %>
+          <% products.forEach( function(element) { %>
               <tr>
                 <td><img src="<%= element.item.imagePath %>" alt=""></td>
                 <td><%= element.item.title %></td>
