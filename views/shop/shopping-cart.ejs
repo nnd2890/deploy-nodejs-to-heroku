@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 
 <div style="padding: 15px;">
-    <% if (productsCart) { %>
+    <% if (productsCart.length > 0) { %>
        <table id="shopping-cart-table">
           <tr>
             <th>Image</th>
@@ -22,19 +22,19 @@
               </tr>
           <% }); %>
         </table>
+
+        <div class="total-checkout col-6 col-s-8 float-right">
+          <strong><span class="float-left">Total: </span><span class="float-right">$<%= totalPrice %></span></strong>
+          <hr class="clear">
+          <a href="/checkout" class="checkout">
+              Check Out
+          </a>
+        </div>
     <% } else { %>
         <div class="row">
                 <h2>No Item in Cart</h2>
         </div>
     <% } %>
-
-    <div class="total-checkout col-6 col-s-8 float-right">
-        <strong><span class="float-left">Total: </span><span class="float-right">$<%= totalPrice %></span></strong>
-        <hr class="clear">
-        <a href="/checkout" class="checkout">
-            Check Out
-        </a>
-    </div>
 </div>
 
 <% include ../partials/footer %>

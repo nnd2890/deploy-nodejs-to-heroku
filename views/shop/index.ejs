@@ -16,24 +16,30 @@
 				<!-- Pagination -->
 				<!-- Pagination search -->
 				<% if (search) { %>
-					<% for (var i = 0; i < productSearch.length; i++) { %>
-				      	<div class="row">
-							<% for(var j = 0; j < productSearch[i].length; j++) { %>
-				                <div class="col-4 col-s-4 card">
-				                    <div class="img-card">
-				                      <img src="<%= productSearch[i][j].imagePath %>" alt="...">
-			                      	</div>
-			                     		<div class="container">
-				                     		<h3><b>$<%= productSearch[i][j].price %></b></h3>
-											<h4><%= productSearch[i][j].title %></h4>
-											<a href="/add-to-cart/<%= products[i][j]._id %>" class="add-to-cart" role="button">
-												<i class="fas fa-shopping-cart"></i>
-											</a>
-				                    	</div>
-				                </div>
-				            <% } %>
-						</div>
-					<% } %>
+					<% if (productSearch.length > 0) { %>
+						<% for (var i = 0; i < productSearch.length; i++) { %>
+					      	<div class="row">
+								<% for(var j = 0; j < productSearch[i].length; j++) { %>
+					                <div class="col-4 col-s-4 card">
+					                    <div class="img-card">
+					                      <img src="<%= productSearch[i][j].imagePath %>" alt="...">
+				                      	</div>
+				                     		<div class="container">
+					                     		<h3><b>$<%= productSearch[i][j].price %></b></h3>
+												<h4><%= productSearch[i][j].title %></h4>
+												<a href="/add-to-cart/<%= products[i][j]._id %>" class="add-to-cart" role="button">
+													<i class="fas fa-shopping-cart"></i>
+												</a>
+					                    	</div>
+					                </div>
+					            <% } %>
+							</div>
+						<% } %>
+					<% } else { %>
+					 	<div>
+						 	<h2>Your Search was not matched, please try again!</h2>
+					 	</div>
+				 	<% } %>
 
 					<% if (pages > 0) { %>
 						<div class="pagination">

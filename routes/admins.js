@@ -45,7 +45,7 @@ router.get('/products', isAdmin, function(req, res, next) {
       });
 });
 
-router.get('/products/:page', function(req, res, next) {
+router.get('/products/:page', isAdmin, function(req, res, next) {
   var successMsg = req.flash('success')[0];
   // Set home page will appear
   var productChunks = [];
@@ -80,22 +80,74 @@ router.get('/products/:page', function(req, res, next) {
       });
 });
 
-router.get('/orders', function(req, res, next) {
-  Order.find({}, function(err, orders) {
-    if (err) {
-      return res.write('Error');
-    }
-    var cart;
-    orders.forEach(function(order) {
-      cart = new Cart(order.cart);
-      order.items = cart.generateArray();
-    });
-    res.render('admin/orders', {title: 'Orders', orders: orders, csrfToken: req.csrfToken()});
-  });
+router.get('/orders', isAdmin, function(req, res, next) {
+  var successMsg = req.flash('success')[0];
+  
+  // Set home page will appear
+  var perPage = 3;
+  var page = 1;
+
+  Order
+      .find({})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function(err, docs) {
+          Order.count().exec(function(err, count) {
+              if (err) return next(err)
+              var cart;
+              docs.forEach(function(order) {
+                cart = new Cart(order.cart);
+                order.items = cart.generateArray();
+              });
+              res.render('admin/orders', {
+                  current: page,
+                  pages: Math.ceil(count / perPage),
+                  search: req.query.search,
+                  orders: docs,
+                  title: 'Shopping Cart',
+                  successMsg: successMsg,
+                  noMessages: !successMsg,
+                  csrfToken: req.csrfToken()
+              })
+          })
+      });
+});
+
+router.get('/orders/:page', isAdmin, function(req, res, next) {
+  var successMsg = req.flash('success')[0];
+  
+  // Set home page will appear
+  var perPage = 5;
+  var page = req.params.page || 1;
+
+  Order
+      .find({})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function(err, docs) {
+          Order.count().exec(function(err, count) {
+              if (err) return next(err)
+              var cart;
+              docs.forEach(function(order) {
+                cart = new Cart(order.cart);
+                order.items = cart.generateArray();
+              });
+              res.render('admin/orders', {
+                  current: page,
+                  pages: Math.ceil(count / perPage),
+                  search: req.query.search,
+                  orders: docs,
+                  title: 'Shopping Cart',
+                  successMsg: successMsg,
+                  noMessages: !successMsg,
+                  csrfToken: req.csrfToken()
+              })
+          })
+      });
 });
 
 // Change Status for order
-router.post('/order-status/:id', function(req, res, next) {
+router.post('/order-status/:id', isAdmin, function(req, res, next) {
     let query = {_id: req.params.id};
     Order.findOne(query, function(err, doc) {
         if(err) {
